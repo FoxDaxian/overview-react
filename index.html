@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./build/node_modules/react/umd/react.development.js"></script>
+  <script src="./build/node_modules/react-dom/umd/react-dom.development.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div class="app"></div>
+  <script>
+    const app = document.querySelector('.app');
+
+
+    const h = React.createElement;
+    const rdom = h(
+      h('h1', {}, '当做type的react-dom'),
+      {
+        className: 'fox'
+      },
+      h(
+        'button',
+        {},
+        '里面的内容'
+      ),
+      '第四个参数作为children'
+    );
+
+
+    console.log(JSON.stringify(rdom, null, 2));
+
+
+    // function Button()  {
+
+    //   function handleClick()  {
+    //     console.log('点击事件');
+    //   }
+    //   return React.createElement('button', {
+    //     onClick: handleClick
+    //   }, '按钮');
+    // }
+
+    // function init() {
+    //   ReactDOM.render(Button(), app);
+    // }
+
+    // init();
+
+  </script>
+</body>
+</html>

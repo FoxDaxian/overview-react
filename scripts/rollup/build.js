@@ -457,11 +457,15 @@ async function createBundle(bundle, bundleType) {
   const format = getFormat(bundleType);
   const packageName = Packaging.getPackageName(bundle.entry);
 
+  // 因为使用了workspace，所以可以直接引用packages中的本地包
   let resolvedEntry = require.resolve(bundle.entry);
+
   const isFBBundle =
     bundleType === FB_WWW_DEV ||
     bundleType === FB_WWW_PROD ||
     bundleType === FB_WWW_PROFILING;
+
+  // 根据bundleType决定是否使用FB模式
   if (isFBBundle) {
     const resolvedFBEntry = resolvedEntry.replace('.js', '.fb.js');
     if (fs.existsSync(resolvedFBEntry)) {
@@ -473,6 +477,7 @@ async function createBundle(bundle, bundleType) {
     bundleType === UMD_DEV ||
     bundleType === UMD_PROD ||
     bundleType === UMD_PROFILING;
+
   const peerGlobals = Modules.getPeerGlobals(bundle.externals, bundleType);
   let externals = Object.keys(peerGlobals);
   if (!shouldBundleDependencies) {
@@ -489,6 +494,7 @@ async function createBundle(bundle, bundleType) {
     module => !importSideEffects[module]
   );
 
+  // rollup配置
   const rollupConfig = {
     input: resolvedEntry,
     treeshake: {

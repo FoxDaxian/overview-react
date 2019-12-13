@@ -5,7 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+
 import ReactVersion from 'shared/ReactVersion';
+
+// 一些独一无二的类型
 import {
   REACT_FRAGMENT_TYPE,
   REACT_PROFILER_TYPE,
@@ -15,8 +18,11 @@ import {
 } from 'shared/ReactSymbols';
 
 import {Component, PureComponent} from './ReactBaseClasses';
+
 import {createRef} from './ReactCreateRef';
+
 import {forEach, map, count, toArray, only} from './ReactChildren';
+
 import {
   createElement,
   createFactory,
@@ -24,10 +30,15 @@ import {
   isValidElement,
   jsx,
 } from './ReactElement';
+
 import {createContext} from './ReactContext';
+
 import {lazy} from './ReactLazy';
+
 import forwardRef from './forwardRef';
+
 import memo from './memo';
+
 import {
   useCallback,
   useContext,
@@ -43,7 +54,9 @@ import {
   useTransition,
   useDeferredValue,
 } from './ReactHooks';
+
 import {withSuspenseConfig} from './ReactBatchConfig';
+
 import {
   createElementWithValidation,
   createFactoryWithValidation,
@@ -52,10 +65,15 @@ import {
   jsxWithValidationStatic,
   jsxWithValidationDynamic,
 } from './ReactElementValidator';
+
 import ReactSharedInternals from './ReactSharedInternals';
+
 import createFundamental from 'shared/createFundamentalComponent';
+
 import createResponder from 'shared/createEventResponder';
+
 import createScope from 'shared/createScope';
+
 import {
   enableJSXTransformAPI,
   enableFlareAPI,
@@ -63,7 +81,9 @@ import {
   enableScopeAPI,
   exposeConcurrentModeAPIs,
 } from 'shared/ReactFeatureFlags';
+
 const React = {
+  // 操作props.children的方法
   Children: {
     map,
     forEach,
@@ -72,7 +92,10 @@ const React = {
     only,
   },
 
+  // 创造一个指向ref伪指针
   createRef,
+
+  // 组件方法，没有别的操作
   Component,
   PureComponent,
 
