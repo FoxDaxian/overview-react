@@ -11,25 +11,30 @@
 <body>
   <div class="app"></div>
   <script>
+    const h = React.createElement;
     const app = document.querySelector('.app');
 
 
-    const h = React.createElement;
-    const rdom = h(
-      h('h1', {}, '当做type的react-dom'),
-      {
-        className: 'fox'
-      },
-      h(
-        'button',
-        {},
-        '里面的内容'
-      ),
-      '第四个参数作为children'
-    );
+    // const rdom = h(
+    //   h('h1', {}, '当做type的react-dom'),
+    //   {
+    //     className: 'fox'
+    //   },
+    //   h(
+    //     'button',
+    //     {},
+    //     '里面的内容'
+    //   ),
+    //   '第四个参数作为children'
+    // );
+    // console.log(JSON.stringify(rdom, null, 2));
 
+    console.log(ReactDOM.render, '==');
 
-    console.log(JSON.stringify(rdom, null, 2));
+    const res = ReactDOM.render(h('div', {}, 'div内的文字'), app, () => {
+      console.log('渲染完毕', this === window, this);
+    });
+
 
 
     // function Button()  {
