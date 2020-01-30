@@ -82,7 +82,7 @@ class Header extends React.Component {
                 <option value="/event-pooling">Event Pooling</option>
                 <option value="/custom-elements">Custom Elements</option>
                 <option value="/media-events">Media Events</option>
-                <option value="/pointer-events">Pointer Events</option>
+                <option value="/pointer-events">Poi1nter Events</option>
                 <option value="/mouse-events">Mouse Events</option>
                 <option value="/selection-events">Selection Events</option>
                 <option value="/suspense">Suspense</option>

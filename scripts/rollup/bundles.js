@@ -18,6 +18,7 @@ const bundleTypes = {
   RN_FB_PROFILING: 'RN_FB_PROFILING',
 };
 
+// 解构赋值
 const {
   UMD_DEV,
   UMD_PROD,
@@ -37,15 +38,19 @@ const {
 } = bundleTypes;
 
 const moduleTypes = {
-  // React
+  // React: 同构
   ISOMORPHIC: 'ISOMORPHIC',
   // Individual renderers. They bundle the reconciler. (e.g. ReactDOM)
+  // 渲染器？
   RENDERER: 'RENDERER',
   // Helper packages that access specific renderer's internals. (e.g. TestUtils)
+  // 访问特定渲染器内部的帮助程序包
   RENDERER_UTILS: 'RENDERER_UTILS',
   // Standalone reconciler for third-party renderers.
+  // 协调器
   RECONCILER: 'RECONCILER',
   // Non-Fiber implementations like SSR and Shallow renderers.
+  // 非fiber的实现，比如ssr或者shallow
   NON_FIBER_RENDERER: 'NON_FIBER_RENDERER',
 };
 
@@ -755,6 +760,7 @@ function deepFreeze(o) {
 }
 
 // Don't accidentally mutate config as part of the build
+// 不要乱改老子的配置！
 deepFreeze(bundles);
 deepFreeze(bundleTypes);
 deepFreeze(moduleTypes);

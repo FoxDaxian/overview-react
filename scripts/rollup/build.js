@@ -25,6 +25,13 @@ const {asyncCopyTo, asyncRimRaf} = require('./utils');
 const codeFrame = require('babel-code-frame');
 const Wrappers = require('./wrappers');
 
+// fs.writeFile(`${process.cwd()}/process-info.txt`, JSON.stringify(process.env, null, 2), (err) => {
+//   if (err) {
+//     console.log('报错了');
+//   } else {
+//     console.log('写入完毕');
+//   }
+// });
 const RELEASE_CHANNEL = process.env.RELEASE_CHANNEL;
 
 // Default to building in experimental mode. If the release channel is set via
@@ -33,6 +40,7 @@ const __EXPERIMENTAL__ =
   typeof RELEASE_CHANNEL === 'string'
     ? RELEASE_CHANNEL === 'experimental'
     : true;
+
 
 // Errors in promises should be fatal.
 let loggedErrors = new Set();
@@ -62,6 +70,7 @@ const {
   RN_FB_PROFILING,
 } = Bundles.bundleTypes;
 
+// 解析npm run xxx 传递的参数
 function parseRequestedNames(names, toCase) {
   let result = [];
   for (let i = 0; i < names.length; i++) {
@@ -107,6 +116,7 @@ const closureOptions = {
   rewrite_polyfills: false,
 };
 
+// 获取babel基本配置
 function getBabelConfig(updateBabelOptions, bundleType, filename) {
   let options = {
     exclude: '/**/node_modules/**',
@@ -451,15 +461,21 @@ async function createBundle(bundle, bundleType) {
     return;
   }
 
+  // 获取各个包，替换 / => -，根据bundleType返回不同环境的结果
   const filename = getFilename(bundle.entry, bundle.global, bundleType);
+  // 唯一的打印key值
   const logKey =
     chalk.white.bold(filename) + chalk.dim(` (${bundleType.toLowerCase()})`);
+
+  // 获取format格式
   const format = getFormat(bundleType);
+  // 获取包名，只包含/之前的
   const packageName = Packaging.getPackageName(bundle.entry);
 
   // 因为使用了workspace，所以可以直接引用packages中的本地包
   let resolvedEntry = require.resolve(bundle.entry);
 
+  // 是否启用了FB
   const isFBBundle =
     bundleType === FB_WWW_DEV ||
     bundleType === FB_WWW_PROD ||
@@ -473,11 +489,13 @@ async function createBundle(bundle, bundleType) {
     }
   }
 
+  // 是否打包依赖
   const shouldBundleDependencies =
     bundleType === UMD_DEV ||
     bundleType === UMD_PROD ||
     bundleType === UMD_PROFILING;
 
+  // 获取所有依赖，设置到externals，提出无副作用
   const peerGlobals = Modules.getPeerGlobals(bundle.externals, bundleType);
   let externals = Object.keys(peerGlobals);
   if (!shouldBundleDependencies) {
@@ -645,6 +663,7 @@ function handleRollupError(error) {
   }
 }
 
+// 总之就是，啥都自己搞
 async function buildEverything() {
   if (!argv['unsafe-partial']) {
     await asyncRimRaf('build');
@@ -688,11 +707,13 @@ async function buildEverything() {
     bundles = bundles.filter((_, i) => i % nodeTotal === nodeIndex);
   }
 
+  // 挨个打包
   // eslint-disable-next-line no-for-of-loops/no-for-of-loops
   for (const [bundle, bundleType] of bundles) {
     await createBundle(bundle, bundleType);
   }
 
+  // 复制资源等操作
   await Packaging.copyAllShims();
   await Packaging.prepareNpmPackages();
 
@@ -702,6 +723,7 @@ async function buildEverything() {
     await Sync.syncReactDom('build/facebook-www', syncWWWPath);
   }
 
+  // 打印体积等stats信息
   console.log(Stats.printResults());
   if (!forcePrettyOutput) {
     Stats.saveResults();
@@ -716,4 +738,4 @@ async function buildEverything() {
   }
 }
 
-buildEverything();
+// buildEverything();

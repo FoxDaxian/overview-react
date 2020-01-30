@@ -12,6 +12,7 @@ const UMD_PROFILING = bundleTypes.UMD_PROFILING;
 // us know whether we can safely omit them when they are unused.
 const HAS_NO_SIDE_EFFECTS_ON_IMPORT = false;
 // const HAS_SIDE_EFFECTS_ON_IMPORT = true;
+// 明确哪些是有副作用的
 const importSideEffects = Object.freeze({
   'prop-types/checkPropTypes': HAS_NO_SIDE_EFFECTS_ON_IMPORT,
   'react-native/Libraries/ReactPrivate/ReactNativePrivateInterface': HAS_NO_SIDE_EFFECTS_ON_IMPORT,
@@ -21,6 +22,7 @@ const importSideEffects = Object.freeze({
 });
 
 // Bundles exporting globals that other modules rely on.
+// 创建全局对应的名称
 const knownGlobals = Object.freeze({
   react: 'React',
   'react-dom': 'ReactDOM',
@@ -33,6 +35,7 @@ const knownGlobals = Object.freeze({
 });
 
 // Given ['react'] in bundle externals, returns { 'react': 'React' }.
+// 根据给定的全局(UND)名称，返回真正的名称对象
 function getPeerGlobals(externals, bundleType) {
   const peerGlobals = {};
   externals.forEach(name => {
@@ -50,6 +53,7 @@ function getPeerGlobals(externals, bundleType) {
 }
 
 // Determines node_modules packages that are safe to assume will exist.
+// 获取所有生产环境依赖
 function getDependencies(bundleType, entry) {
   // Replaces any part of the entry that follow the package name (like
   // "/server" in "react-dom/server") by the path to the package settings
@@ -64,6 +68,7 @@ function getDependencies(bundleType, entry) {
 }
 
 // Hijacks some modules for optimization and integration reasons.
+// 删除和合并了一些node_moduoles依赖
 function getForks(bundleType, entry, moduleType) {
   const forksForBundle = {};
   Object.keys(forks).forEach(srcModule => {
