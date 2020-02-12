@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    function hoc(fn) {
+      try {
+        return fn();
+      } finally {
+        // 一些其他操作，这些操作会在 `fn()执行后，return执行前` 被执行
+      }
+    }
+    console.log(fn());
+
+  </script>
+</body>
+</html>

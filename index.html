@@ -9,7 +9,7 @@
   <title>Document</title>
 </head>
 <body>
-  <div class="app"></div>
+  <div class="app"><p>123</p></div>
   <script>
     const h = React.createElement;
     const app = document.querySelector('.app');
@@ -29,12 +29,10 @@
     // );
     // console.log(JSON.stringify(rdom, null, 2));
 
-    console.log(ReactDOM.render, '==');
 
     const res = ReactDOM.render(h('div', {}, 'div内的文字'), app, () => {
-      console.log('渲染完毕', this === window, this);
     });
-    console.log(res, '==12');
+
 
 
 
@@ -53,7 +51,6 @@
     // }
 
     // init();
-
   </script>
 </body>
 </html>
